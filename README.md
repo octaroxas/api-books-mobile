@@ -1,9 +1,10 @@
 <img align="right" src="http://www.ufopa.edu.br/ppge/images/ppge/imagens/Ufopa_braso_PNG_fundo_transparente.png" style="width: 80px;" alt="UFOPA's Logo" />
 
-# [`Backend`] Aplicativo "_Égua, onde eu tava_"
+# "_Égua, onde eu tava_" `< Backend >`
+
 <img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Python-292e33?style=flat-square&logo=Python&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Docker-292e33?style=flat-square&logo=Docker&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/FastAPI-292e33?style=flat-square&logo=FastAPI&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/PostgreSQL-292e33?style=flat-square&logo=Postgresql&logoColor=fff">
 
-> `Backend` feito com ❤️ por Lucas Rodrigues (<a href="https://github.com/NepZR/" target="_blank">@NepZR</a>), associado e desenvolvido para o projeto da disciplina de "Tópicos Especiais em Computação Móvel", no Semestre 2022.2 da UFOPA. Para acessar o `Frontend`, <a href="https://github.com/octaroxas/mobile-books-app">clique aqui</a>.
+> Feito com ❤️ por Lucas Rodrigues (<a href="https://github.com/NepZR/" target="_blank">@NepZR</a>). Repositório associado e desenvolvido para o projeto da disciplina de "Tópicos Especiais em Computação Móvel", no Semestre 2022.2 da UFOPA. Para acessar o `Frontend`, <a href="https://github.com/octaroxas/mobile-books-app">clique aqui</a>.
 >
 #### ⚠️ Disclaimer: o código desta parte do projeto está sendo desenvolvido em paralelo com as aulas e também, quando possível, durante os slots de tempo livre fora das aulas. Este documento (README) será mantido atualizado conforme novas alterações forem realizadas no repositório.
 
@@ -17,7 +18,7 @@
 ---
 
 ### 🚀 Guia de início
-> Será considerado que o Python 3.11 e o Python Package Manager (PIP) estão instalados no sistema alvo. Caso não tenha instalado, clique <a href="https://wiki.python.org/moin/BeginnersGuide/Download">aqui</a> e siga as instruções de instalação conforme a documentação oficial.
+> Será considerado que o Python 3.11 e o Python Package Manager (PIP) estão instalados no sistema alvo. Caso não tenha instalado, clique <a href="https://wiki.python.org/moin/BeginnersGuide/Download">aqui</a> e siga as instruções de instalação conforme a documentação oficial. Além disso, será necessária a instalação do Docker e Docker-Compose no sistema. Para isso, siga as instruções disponíveis <a href="https://docs.docker.com/get-docker/">aqui</a>.
 
 #### 1. Instalar o Python Environment Shell (Pipenv)
 ~~~bash
@@ -43,7 +44,31 @@ pipenv shell
 ~~~
 > Esse comando cria, localmente, um ambiente isolado com o Python 3.11 para o projeto e, automaticamente, configura todas as bibliotecas e dependências para a correta execução.
 
-#### 5. WIP.
+---
+
+### 🚀 Executando o projeto
+> Será considerado que os passos da seção `🚀 Guia de início` foram executados previamente.
+
+#### 1. Acessar a pasta do projeto
+~~~bash
+cd api-books-mobile
+~~~
+
+#### 2. Iniciar o banco de dados (PostgreSQL, Docker)
+~~~bash
+docker-compose up -d --build -f database/docker/docker-compose.yaml
+~~~
+
+#### 3. Entrar no ambiente Pipenv do projeto
+> Certifique-se de executar este comando **sempre** na raiz do repositório: `api-books-mobile`.
+~~~bash
+pipenv shell
+~~~
+
+#### 4. Iniciar o backend/API com o Uvicorn
+~~~bash
+uvicorn books_mobile:app --host 0.0.0.0 --port 5000
+~~~
 
 ---
 
