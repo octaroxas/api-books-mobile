@@ -64,7 +64,7 @@ cd api-books-mobile
 
 #### 2. Iniciar o banco de dados (PostgreSQL, Docker)
 ~~~bash
-docker-compose up -d --build -f database/docker/docker-compose.yaml
+docker-compose -f database/docker/docker-compose.yaml up -d --build 
 ~~~
 
 #### 3. Entrar no ambiente Pipenv do projeto OU ativar o environment via Miniconda
