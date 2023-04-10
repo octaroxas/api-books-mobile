@@ -8,7 +8,7 @@ class DatabaseAPI:
     def __init__(self) -> None:
         self.conn = psycopg2.connect(
             database="books_mobile",
-            host="localhost",
+            host="lr-netserver.blue-stonecat.ts.net",
             user="books",
             password="books",
             port="5432"
