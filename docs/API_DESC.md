@@ -1,11 +1,11 @@
 <br><hr><br>
 <img align="right" src="http://www.ufopa.edu.br/ppge/images/ppge/imagens/Ufopa_braso_PNG_fundo_transparente.png" style="width: 80px;" alt="UFOPA's Logo" />
 
-<h1><i>"Égua, onde eu tava"</i></h1>
+<h1><i>Égua, onde eu tava</i></h1>
 
-<img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Python-292e33?style=flat-square&logo=Python&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Docker-292e33?style=flat-square&logo=Docker&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/FastAPI-292e33?style=flat-square&logo=FastAPI&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/PostgreSQL-292e33?style=flat-square&logo=Postgresql&logoColor=fff">
+<img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Python-292e33?style=flat-square&logo=Python&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Pipenv-292e33?style=flat-square&logo=Python&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Miniconda-292e33?style=flat-square&logo=Anaconda&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Docker-292e33?style=flat-square&logo=Docker&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/FastAPI-292e33?style=flat-square&logo=FastAPI&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/PostgreSQL-292e33?style=flat-square&logo=Postgresql&logoColor=fff">
 
-<cite> Feito com ❤️ por Lucas Rodrigues (<a href="https://github.com/NepZR/" target="_blank">@NepZR</a>). Repositório associado e desenvolvido para o projeto da disciplina de "Tópicos Especiais em Computação Móvel", no Semestre 2022.2 da UFOPA. Para acessar o `Frontend`, <a href="https://github.com/octaroxas/mobile-books-app">clique aqui</a>.</cite>
+> `Backend` feito com ❤️ por Lucas Rodrigues (<a href="https://github.com/NepZR/" target="_blank">@NepZR</a>). Repositório associado e desenvolvido para o projeto da disciplina de "Tópicos Especiais em Computação Móvel", no Semestre 2022.2 da UFOPA. Para acessar o `Frontend`, <a href="https://github.com/octaroxas/mobile-books-app">clique aqui</a>.
 
 <h3 style="text-align: justify;">
   👨🏻‍💻 Repository Maintainer
