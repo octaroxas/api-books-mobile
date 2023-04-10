@@ -38,3 +38,9 @@ class DatabaseAPI:
 
         query_data = self.database.fetchall()
         return query_data
+
+    def get_users(self) -> List[tuple]:
+        query_stmt = "SELECT * FROM users;"
+
+        users_list = self.make_query(query_stmt=query_stmt)
+        return users_list
