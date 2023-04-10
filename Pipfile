@@ -8,6 +8,7 @@ translate = "*"
 fastapi = "*"
 psycopg2-binary = "*"
 uvicorn = {extras = ["standard"], version = "*"}
+loguru = "*"
 
 [dev-packages]
 
