@@ -11,6 +11,10 @@ methods_meta = [
     {
         "name": "Books",
         "description": "Section dedicated for Books Management."
+    },
+    {
+        "name": "Debug",
+        "description": "Section dedicated for endpoints with debugging purposes."
     }
 ]
 
@@ -30,8 +34,8 @@ app = FastAPI(
 )
 
 
-@app.get(path="/test-db")
-def test_db_connection() -> bool:
+@app.get(path="/test-dbcx", tags=["Debug"])
+def test_database_connection() -> bool:
     try:
         DatabaseAPI()
         return True
