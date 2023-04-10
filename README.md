@@ -1,10 +1,10 @@
 <img align="right" src="http://www.ufopa.edu.br/ppge/images/ppge/imagens/Ufopa_braso_PNG_fundo_transparente.png" style="width: 80px;" alt="UFOPA's Logo" />
 
-# "_Égua, onde eu tava_" `< Backend >`
+# _Égua, onde eu tava_
 
-<img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Python-292e33?style=flat-square&logo=Python&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Docker-292e33?style=flat-square&logo=Docker&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/FastAPI-292e33?style=flat-square&logo=FastAPI&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/PostgreSQL-292e33?style=flat-square&logo=Postgresql&logoColor=fff">
+<img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Python-292e33?style=flat-square&logo=Python&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Pipenv-292e33?style=flat-square&logo=Python&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Miniconda-292e33?style=flat-square&logo=Anaconda&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Docker-292e33?style=flat-square&logo=Docker&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/FastAPI-292e33?style=flat-square&logo=FastAPI&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/PostgreSQL-292e33?style=flat-square&logo=Postgresql&logoColor=fff">
 
-> Feito com ❤️ por Lucas Rodrigues (<a href="https://github.com/NepZR/" target="_blank">@NepZR</a>). Repositório associado e desenvolvido para o projeto da disciplina de "Tópicos Especiais em Computação Móvel", no Semestre 2022.2 da UFOPA. Para acessar o `Frontend`, <a href="https://github.com/octaroxas/mobile-books-app">clique aqui</a>.
+> `Backend` feito com ❤️ por Lucas Rodrigues (<a href="https://github.com/NepZR/" target="_blank">@NepZR</a>). Repositório associado e desenvolvido para o projeto da disciplina de "Tópicos Especiais em Computação Móvel", no Semestre 2022.2 da UFOPA. Para acessar o `Frontend`, <a href="https://github.com/octaroxas/mobile-books-app">clique aqui</a>.
 >
 #### ⚠️ Disclaimer: o código desta parte do projeto está sendo desenvolvido em paralelo com as aulas e também, quando possível, durante os slots de tempo livre fora das aulas. Este documento (README) será mantido atualizado conforme novas alterações forem realizadas no repositório.
 
@@ -18,11 +18,15 @@
 ---
 
 ### 🚀 Guia de início
-> Será considerado que o Python 3.11 e o Python Package Manager (PIP) estão instalados no sistema alvo. Caso não tenha instalado, clique <a href="https://wiki.python.org/moin/BeginnersGuide/Download">aqui</a> e siga as instruções de instalação conforme a documentação oficial. Além disso, será necessária a instalação do Docker e Docker-Compose no sistema. Para isso, siga as instruções disponíveis <a href="https://docs.docker.com/get-docker/">aqui</a>.
+<img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Pipenv-292e33?style=flat-square&logo=Python&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Miniconda-292e33?style=flat-square&logo=Anaconda&logoColor=fff"><br>
+> Será considerado que o Python 3.11 e o Python Package Manager (PIP) estão instalados no sistema alvo. Caso não tenha instalado, clique <a href="https://wiki.python.org/moin/BeginnersGuide/Download">aqui</a> e siga as instruções de instalação conforme a documentação oficial. Também é possível configurar o ambiente com o Miniconda, acesse <a href="https://conda.io/en/latest/miniconda">aqui</a>. Além disso, será necessária a instalação do Docker e Docker-Compose no sistema. Para isso, siga as instruções disponíveis <a href="https://docs.docker.com/get-docker/">aqui</a>.
 
-#### 1. Instalar o Python Environment Shell (Pipenv)
+#### 1. Instalar o Python Environment Shell (`pipenv`) OU criar um Miniconda Environment para o projeto (`conda`)
 ~~~bash
 pip install pipenv
+~~~
+~~~bash
+conda create -n api_books_mobile python=3.11 -y && conda activate api_books_mobile
 ~~~
 
 #### 2. Clonar este repositório via SSH ou HTTPS
@@ -38,11 +42,15 @@ git clone https://github.com/octaroxas/api-books-mobile.git
 cd api-books-mobile
 ~~~
 
-#### 4. Inicializar o ambiente via Pipenv
+#### 4. Inicializar o ambiente via Pipenv (primeiro comando) OU instalar as dependências, caso esteja via Miniconda (segundo comando)
 ~~~bash
 pipenv shell
 ~~~
 > Esse comando cria, localmente, um ambiente isolado com o Python 3.11 para o projeto e, automaticamente, configura todas as bibliotecas e dependências para a correta execução.
+
+~~~bash
+pip install -r requirements.txt
+~~~
 
 ---
 
@@ -59,10 +67,13 @@ cd api-books-mobile
 docker-compose up -d --build -f database/docker/docker-compose.yaml
 ~~~
 
-#### 3. Entrar no ambiente Pipenv do projeto
+#### 3. Entrar no ambiente Pipenv do projeto OU ativar o environment via Miniconda
 > Certifique-se de executar este comando **sempre** na raiz do repositório: `api-books-mobile`.
 ~~~bash
 pipenv shell
+~~~
+~~~bash
+conda activate api_books_mobile
 ~~~
 
 #### 4. Iniciar o backend/API com o Uvicorn
