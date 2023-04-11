@@ -17,6 +17,12 @@ class BooksAuthController:
     def get_auth_scheme(self) -> OAuth2PasswordBearer:
         return self.__AUTHSCH
 
+    def insert_user(self, user_data: NewUser):
+        hashed_pwd = self.get_password_hash(password=user_data.password)
+
+        user_data.password = hashed_pwd
+        return self.__USRCTRL.insert_user(user_data=user_data)
+
     def get_user(self, username: str) -> UserInDB | None:
         if username in self.__USRCTRL.get_users():
             user_dict = self.__USRCTRL.get_users()[username]
@@ -62,6 +68,4 @@ class BooksAuthController:
 
     @staticmethod
     async def get_current_active_user(current_user: User = Depends(get_current_user)) -> User:
-        if current_user.disabled:
-            raise HTTPException(status_code=400, detail="Inactive user.")
         return current_user
