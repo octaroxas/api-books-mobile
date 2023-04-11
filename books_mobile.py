@@ -1,13 +1,12 @@
 from typing import Annotated
 
-from starlette.requests import Request
-from fastapi import FastAPI, Body, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from loguru import logger
 
 from api.gateway.database import DatabaseAPI
 from api.controller.auth import BooksAuthController
-from api.model.user import Token
+from api.model.user import Token, NewUser
 
 methods_meta = [
     {
@@ -39,7 +38,7 @@ app = FastAPI(
         "url": "https://www.linkedin.com/in/lucasdfr/",
         "email": "lucas.darlindo@gmail.com"
     },
-    docs_url=None, redoc_url="/documentation",
+    docs_url="/docs", redoc_url="/documentation",
     openapi_tags=methods_meta, description=description
 )
 
@@ -68,3 +67,12 @@ async def user_login(user_credentials: Annotated[OAuth2PasswordRequestForm, Depe
 
     access_token = BooksAuthController().create_access_token(data={"sub": user.name})
     return {"access_token": access_token, "token_type": "bearer", "expiration_time": None}
+
+
+@app.put(path="/create-user", tags=["Users"])
+async def create_user(user_data: NewUser):
+    insertion_status = BooksAuthController().insert_user(user_data=user_data)
+    if insertion_status:
+        return {"username": user_data.nickname, "status": "acknowledged"}
+    else:
+        return {"username": user_data.nickname, "status": "error"}
