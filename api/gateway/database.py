@@ -1,7 +1,8 @@
 import os
-from typing import List, Optional
+from typing import Optional, List
 
 import psycopg2
+from loguru import logger
 from dotenv import load_dotenv
 from psycopg2.extensions import cursor
 
@@ -39,8 +40,23 @@ class DatabaseAPI:
         query_data = self.database.fetchall()
         return query_data
 
-    def get_users(self) -> List[tuple]:
-        query_stmt = "SELECT * FROM users;"
+    def get_data(self, table_name: str) -> List[tuple]:
+        query_stmt = f"SELECT * FROM {table_name};"
 
-        users_list = self.make_query(query_stmt=query_stmt)
-        return users_list
+        db_data = self.make_query(query_stmt=query_stmt)
+        return db_data
+
+    def insert_data(self, table_name: str, data_dict: dict) -> bool:
+        query_stmt = f"INSERT INTO {table_name} VALUES (DEFAULT, "
+        for field in data_dict.keys():
+            query_stmt += f"'{data_dict[field]}', "
+
+        query_stmt = query_stmt[:-2]
+        query_stmt += ");"
+        print(query_stmt)
+        try:
+            self.database.execute(query=query_stmt)
+            return True
+        except Exception as insert_err:
+            logger.error(f"Error inserting new data into {table_name} table. Error/Exception: {insert_err}.")
+            return False
