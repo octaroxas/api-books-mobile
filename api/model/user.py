@@ -5,9 +5,12 @@ from pydantic import BaseModel
 
 class User(BaseModel):
     name: Optional[str] = None
-    nickname: str
     email: str
-    disabled: Optional[bool] = None
+
+
+class NewUser(User):
+    password: str
+    nickname: str
 
 
 class Token(BaseModel):
