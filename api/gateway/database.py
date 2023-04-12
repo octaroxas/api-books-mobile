@@ -56,6 +56,7 @@ class DatabaseAPI:
         print(query_stmt)
         try:
             self.database.execute(query=query_stmt)
+            self.conn.commit()
             return True
         except Exception as insert_err:
             logger.error(f"Error inserting new data into {table_name} table. Error/Exception: {insert_err}.")
