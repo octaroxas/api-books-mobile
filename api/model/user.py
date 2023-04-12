@@ -8,11 +8,6 @@ class User(BaseModel):
     email: str
 
 
-class NewUser(User):
-    password: str
-    nickname: str
-
-
 class Token(BaseModel):
     access_token: str
     token_type: str
@@ -23,5 +18,6 @@ class TokenData(BaseModel):
     username: Union[str, None] = None
 
 
-class UserInDB(User):
+class DBUser(User):
     hashed_password: str
+    nickname: str
