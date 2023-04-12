@@ -17,16 +17,16 @@ class BooksAuthController:
     def get_auth_scheme(self) -> OAuth2PasswordBearer:
         return self.__AUTHSCH
 
-    def insert_user(self, user_data: NewUser):
+    def insert_user(self, user_data: DBUser) -> bool:
         hashed_pwd = self.get_password_hash(password=user_data.password)
 
         user_data.password = hashed_pwd
         return self.__USRCTRL.insert_user(user_data=user_data)
 
-    def get_user(self, username: str) -> UserInDB | None:
+    def get_user(self, username: str) -> DBUser | None:
         if username in self.__USRCTRL.get_users():
             user_dict = self.__USRCTRL.get_users()[username]
-            return UserInDB(**user_dict)
+            return DBUser(**user_dict)
 
     def create_access_token(self, data: dict) -> str:
         to_encode = data.copy()
@@ -39,7 +39,7 @@ class BooksAuthController:
     def get_password_hash(self, password: str) -> str:
         return self.__AUTHCTX.hash(password)
 
-    def authenticate_user(self, username: str, password: str) -> bool | UserInDB:
+    def authenticate_user(self, username: str, password: str) -> bool | DBUser:
         user_data = self.get_user(username)
         if not user_data:
             return False
@@ -47,7 +47,7 @@ class BooksAuthController:
             return False
         return user_data
 
-    async def get_current_user(self, token: str = Depends(__AUTHSCH)) -> UserInDB | None:
+    async def get_current_user(self, token: str = Depends(__AUTHSCH)) -> DBUser | None:
         credentials_exception = HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Could not validate credentials",
