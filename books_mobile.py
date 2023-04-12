@@ -6,7 +6,7 @@ from loguru import logger
 
 from api.gateway.database import DatabaseAPI
 from api.controller.auth import BooksAuthController
-from api.model.user import Token, NewUser
+from api.model.user import Token, DBUser
 
 methods_meta = [
     {
@@ -70,7 +70,7 @@ async def user_login(user_credentials: Annotated[OAuth2PasswordRequestForm, Depe
 
 
 @app.put(path="/create-user", tags=["Users"])
-async def create_user(user_data: NewUser):
+async def create_user(user_data: DBUser):
     insertion_status = BooksAuthController().insert_user(user_data=user_data)
     if insertion_status:
         return {"username": user_data.nickname, "status": "acknowledged"}
