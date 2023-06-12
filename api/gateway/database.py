@@ -1,5 +1,5 @@
 import os
-from typing import Optional, List
+from typing import List
 
 import psycopg2
 from loguru import logger
@@ -19,7 +19,7 @@ class DatabaseAPI:
         self.database: cursor = self.conn.cursor()
 
     @staticmethod
-    def __load_db_env(meta_key: str) -> Optional[str]:
+    def __load_db_env(meta_key: str) -> str | None:
         env_file = f"{os.getcwd()}/env/.env"
         env_loaded = load_dotenv(dotenv_path=env_file)
         if env_loaded:
@@ -40,9 +40,20 @@ class DatabaseAPI:
         query_data = self.database.fetchall()
         return query_data
 
-    def get_data(self, table_name: str) -> List[tuple]:
-        query_stmt = f"SELECT * FROM {table_name};"
+    def get_data(self, table_name: str, filters: dict | None = None, filter_by_all: bool = False) -> List[tuple]:
+        query_stmt = f"SELECT * FROM {table_name}"
+        conditional_stmt = "AND" if filter_by_all else "OR"
 
+        if filters is not None:
+            query_stmt += " WHERE "
+            for _filter in filters.keys():
+                query_stmt += f"{_filter} {filters[_filter]}"
+                if len(filters.keys()) > 1:
+                    query_stmt += f" {conditional_stmt} "
+        query_stmt += ";"
+        query_stmt = query_stmt.strip()
+
+        print(query_stmt)
         db_data = self.make_query(query_stmt=query_stmt)
         return db_data
 
@@ -61,3 +72,14 @@ class DatabaseAPI:
         except Exception as insert_err:
             logger.error(f"Error inserting new data into {table_name} table. Error/Exception: {insert_err}.")
             return False
+
+    def remove_data(self, sql_query: str) -> int:
+        print(sql_query)
+        try:
+            self.database.execute(query=sql_query)
+            lines_affected = self.conn.commit()
+            return lines_affected
+        except Exception as rm_err:
+            logger.error(f"Error executing the removal SQL Query. Error/Exception: {rm_err}.")
+            return False
+
