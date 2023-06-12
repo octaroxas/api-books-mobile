@@ -81,6 +81,11 @@ conda activate api_books_mobile
 uvicorn books_mobile:app --host 0.0.0.0 --port 5000
 ~~~
 
+#### 5. Acessar o endpoint com a documentação da API
+~~~bash
+http://localhost:5000/documentation
+~~~
+
 ---
 
 <h3 style="text-align: justify;">
