@@ -6,6 +6,7 @@ from loguru import logger
 
 from api.gateway.database import DatabaseAPI
 from api.controller.auth import BooksAuthController
+from api.controller.user import BooksUserController
 from api.model.user import Token, DBUser
 
 methods_meta = [
@@ -32,18 +33,18 @@ with open("docs/API_DESC.md", "r") as desc:
 
 app = FastAPI(
     title="Égua, onde eu tava",
-    version="0.1.0",
+    version="0.1.5",
     contact={
         "name": "Lucas Darlindo Freitas Rodrigues",
         "url": "https://www.linkedin.com/in/lucasdfr/",
         "email": "lucas.darlindo@gmail.com"
     },
-    docs_url="/docs", redoc_url="/documentation",
+    docs_url=None, redoc_url="/documentation",
     openapi_tags=methods_meta, description=description
 )
 
 
-@app.get(path="/test-dbcx", tags=["Debug"])
+@app.get(path="/debug/database", tags=["Debug"])
 def test_database_connection() -> bool:
     try:
         DatabaseAPI()
@@ -53,8 +54,8 @@ def test_database_connection() -> bool:
         return False
 
 
-@app.post(path="/auth-user", response_model=Token, tags=["Users", "Authentication"])
-async def user_login(user_credentials: Annotated[OAuth2PasswordRequestForm, Depends()]):
+@app.post(path="/users/auth", response_model=Token, tags=["Users", "Authentication"])
+async def user_login(user_credentials: Annotated[OAuth2PasswordRequestForm, Depends()]) -> dict:
     user = BooksAuthController().authenticate_user(
         username=user_credentials.username, password=user_credentials.password
     )
@@ -69,10 +70,18 @@ async def user_login(user_credentials: Annotated[OAuth2PasswordRequestForm, Depe
     return {"access_token": access_token, "token_type": "bearer", "expiration_time": None}
 
 
-@app.put(path="/create-user", tags=["Users"])
-async def create_user(user_data: DBUser):
+@app.put(path="/users/create", tags=["Users"])
+async def create_user(user_data: DBUser) -> dict:
     insertion_status = BooksAuthController().insert_user(user_data=user_data)
     if insertion_status:
         return {"username": user_data.nickname, "status": "acknowledged"}
     else:
         return {"username": user_data.nickname, "status": "error"}
+
+
+@app.delete(path="/users/delete/{user_id}", tags=["Users"])
+async def remove_user(user_credentials: Annotated[OAuth2PasswordRequestForm, Depends()], user_id: int) -> dict:
+    logger.debug(user_credentials.username)
+
+    delete_status = BooksUserController().delete_user(user_id=user_id)
+    return delete_status
