@@ -44,7 +44,7 @@ cd api-books-mobile
 
 #### 4. Inicializar o ambiente via Pipenv (primeiro comando) OU instalar as dependências, caso esteja via Miniconda (segundo comando)
 ~~~bash
-pipenv shell
+pipenv shell && pipenv install
 ~~~
 > Esse comando cria, localmente, um ambiente isolado com o Python 3.11 para o projeto e, automaticamente, configura todas as bibliotecas e dependências para a correta execução.
 
