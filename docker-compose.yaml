@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    container_name: books-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: books
+    network_mode: bridge
+    ports:
+      - "5432:5432"
+    volumes:
+      - books_postgres:/var/lib/postgresql/data
+
+  api:
+    build: .
+    working_dir: "/code/"
+    container_name: books-api
+    restart: unless-stopped
+    command: uvicorn books_mobile:app --host 0.0.0.0 --port 5000
+    ports:
+      - "5000:5000"
+    network_mode: bridge
+
+volumes:
+  books_postgres:
