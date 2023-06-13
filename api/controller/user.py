@@ -32,4 +32,4 @@ class BooksUserController:
         if removed_data != 0:
             return {"username": rm_username, "status": "acknowledged", "timestamp": datetime.now().timestamp()}
         else:
-            return {"username": rm_username, "status": "failed"}
+            return {"username": rm_username, "status": "failed", "timestamp": None}
