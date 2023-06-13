@@ -3,7 +3,7 @@
 # _Égua, onde eu tava?_
 > Versão atual: v0.1.5 (2023-06-12).
 
-<img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Python-292e33?style=flat-square&logo=Python&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Miniconda-292e33?style=flat-square&logo=Anaconda&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Docker-292e33?style=flat-square&logo=Docker&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/FastAPI-292e33?style=flat-square&logo=FastAPI&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/PostgreSQL-292e33?style=flat-square&logo=Postgresql&logoColor=fff">
+<img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Python-292e33?style=flat-square&logo=Python&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Docker-292e33?style=flat-square&logo=Docker&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/FastAPI-292e33?style=flat-square&logo=FastAPI&logoColor=fff"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/PostgreSQL-292e33?style=flat-square&logo=Postgresql&logoColor=fff">
 
 > `Backend` feito com ❤️ por Lucas Rodrigues (<a href="https://github.com/NepZR/" target="_blank">@NepZR</a>). Repositório associado e desenvolvido para o projeto da disciplina de "Tópicos Especiais em Computação Móvel", no Semestre 2022.2 da UFOPA. Para acessar o `Frontend`, <a href="https://github.com/octaroxas/mobile-books-app">clique aqui</a>.
 
@@ -19,8 +19,7 @@
 ---
 
 ### 🚀 Guia de início
-<img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Docker (Compose)-292e33?style=flat-square&logo=Docker&logoColor=fff"><br>
-> Será considerado que o `docker-compose` está instalado no sistema alvo. Para isso, siga as instruções disponíveis <a href="https://docs.docker.com/get-docker/">aqui</a>.
+<a href="https://docs.docker.com/get-docker/"><img style="width: auto; padding-right: 5px;" src="https://img.shields.io/badge/Docker (Compose)-292e33?style=flat-square&logo=Docker&logoColor=fff"><br></a>
 
 #### 1. Clonar este repositório via SSH ou HTTPS
 ~~~bash
@@ -35,15 +34,20 @@ git clone https://github.com/octaroxas/api-books-mobile.git
 cd api-books-mobile
 ~~~
 
-#### 3. Iniciar o backend/API com o `docker-compose`
+#### 3. Iniciar o backend localmente
 ~~~bash
-docker-compose up -d --build
+docker-compose -f docker-compose-local.yaml up -d --build
 ~~~
-> Isso inicializará, simultaneamente, o backend com o banco de dados (PostgreSQL) e o servidor de backend via Uvicorn no Python 3.11.
+> Isso inicializará, simultaneamente, o banco de dados (PostgreSQL) e o servidor de backend via Uvicorn no Python 3.11.
 
 #### 4. Acessar o endpoint com a documentação da API
 ~~~bash
 http://localhost:5000/documentation
+~~~
+
+#### Para interromper, utilize o comando abaixo
+~~~bash
+docker-compose -f docker-compose-local.yaml down
 ~~~
 
 ---
