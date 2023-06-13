@@ -23,8 +23,8 @@ class DatabaseAPI:
                 "db_name": str(os.getenv("DB_NAME")),
                 "db_usr": str(os.getenv("DB_USR")),
                 "db_pwd": str(os.getenv("DB_PWD")),
-                "db_port": str(os.getenv("DB_PORT")),
-                "db_host": str(os.getenv("DB_HOST")) if env_mode == "dev" else "localhost",
+                "db_port": str(os.getenv("DB_PORT")) if env_mode == "dev" else "5433",
+                "db_host": str(os.getenv("DB_HOST")) if env_mode == "dev" else "172.20.0.1",
             }
             return env_db_data.get(meta_key, None)
         else:
