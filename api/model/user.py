@@ -21,3 +21,12 @@ class TokenData(BaseModel):
 class DBUser(User):
     hashed_password: str
     nickname: str
+
+
+class CreatedUser(BaseModel):
+    username: str
+    status: str
+
+
+class RemovedUser(CreatedUser):
+    timestamp: float | None = None
