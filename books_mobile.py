@@ -11,10 +11,6 @@ from api.model.user import Token, DBUser, CreatedUser, RemovedUser
 
 methods_meta = [
     {
-        "name": "Authentication",
-        "description": "Section dedicated for Authentication.",
-    },
-    {
         "name": "Users",
         "description": "Section dedicated for Users Management.",
     },
