@@ -7,7 +7,7 @@ from loguru import logger
 from api.gateway.database import DatabaseAPI
 from api.controller.auth import BooksAuthController
 from api.controller.user import BooksUserController
-from api.model.user import Token, DBUser
+from api.model.user import Token, DBUser, CreatedUser, RemovedUser
 
 methods_meta = [
     {
@@ -33,7 +33,7 @@ with open("docs/API_DESC.md", "r") as desc:
 
 app = FastAPI(
     title="Égua, onde eu tava",
-    version="0.1.5",
+    version="0.1.6",
     contact={
         "name": "Lucas Darlindo Freitas Rodrigues",
         "url": "https://www.linkedin.com/in/lucasdfr/",
@@ -54,7 +54,7 @@ def test_database_connection() -> bool:
         return False
 
 
-@app.post(path="/users/auth", response_model=Token, tags=["Users", "Authentication"])
+@app.post(path="/users/auth", response_model=Token, tags=["Users"])
 async def user_login(user_credentials: Annotated[OAuth2PasswordRequestForm, Depends()]) -> dict:
     user = BooksAuthController().authenticate_user(
         username=user_credentials.username, password=user_credentials.password
@@ -70,7 +70,7 @@ async def user_login(user_credentials: Annotated[OAuth2PasswordRequestForm, Depe
     return {"access_token": access_token, "token_type": "bearer", "expiration_time": None}
 
 
-@app.put(path="/users/create", tags=["Users"])
+@app.put(path="/users/create", tags=["Users"], response_model=CreatedUser)
 async def create_user(user_data: DBUser) -> dict:
     insertion_status = BooksAuthController().insert_user(user_data=user_data)
     if insertion_status:
@@ -79,7 +79,7 @@ async def create_user(user_data: DBUser) -> dict:
         return {"username": user_data.nickname, "status": "error"}
 
 
-@app.delete(path="/users/delete/{user_id}", tags=["Users"])
+@app.delete(path="/users/delete/{user_id}", tags=["Users"], response_model=RemovedUser)
 async def remove_user(user_credentials: Annotated[OAuth2PasswordRequestForm, Depends()], user_id: int) -> dict:
     logger.debug(user_credentials.username)
 
