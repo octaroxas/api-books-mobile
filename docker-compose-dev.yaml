@@ -3,15 +3,16 @@ version: '3'
 services:
   db:
     image: postgres
+    working_dir: "/code/database/"
     container_name: books-db
     restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: books
-    network_mode: bridge
     ports:
       - "5432:5432"
     volumes:
       - books_postgres:/var/lib/postgresql/data
+    network_mode: bridge
 
   api:
     build: .
@@ -22,6 +23,8 @@ services:
     ports:
       - "5000:5000"
     network_mode: bridge
+    environment:
+      - ENVIRONMENT=dev
 
 volumes:
   books_postgres:
