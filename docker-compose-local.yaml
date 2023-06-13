@@ -7,14 +7,17 @@ services:
     container_name: books-db
     restart: unless-stopped
     environment:
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: books
     ports:
-      - "5432:5432"
+      - "5433:5433"
     expose:
-      - "5432"
+      - "5433"
     volumes:
       - books_postgres:/var/lib/postgresql/data
-    network_mode: host
+    networks:
+      books_network:
+    command: -p 5433
 
   api:
     build: .
@@ -22,13 +25,22 @@ services:
     container_name: books-api
     restart: unless-stopped
     command: uvicorn books_mobile:app --host 0.0.0.0 --port 5000
+    depends_on:
+      - db
+    links:
+      - db
     ports:
       - "5000:5000"
-    expose:
-      - "5000"
-    network_mode: host
     environment:
       - ENVIRONMENT=local
+    networks:
+      books_network:
 
 volumes:
   books_postgres:
+
+networks:
+  books_network:
+    enable_ipv6: false
+    name: books-network
+    driver: host
