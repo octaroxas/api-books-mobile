@@ -32,7 +32,7 @@ with open("docs/API_DESC.md", "r") as desc:
     description = desc.read()
 
 app = FastAPI(
-    title="Égua, onde eu tava",
+    title="Égua, onde eu tava?",
     version="0.1.6",
     contact={
         "name": "Lucas Darlindo Freitas Rodrigues",
