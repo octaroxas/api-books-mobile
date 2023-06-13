@@ -42,7 +42,7 @@ docker-compose -f docker-compose-local.yaml up -d --build
 
 #### 4. Acessar o endpoint com a documentação da API
 ~~~bash
-http://localhost:5000/documentation
+http://0.0.0.0:5000/documentation
 ~~~
 
 #### Para interromper, utilize o comando abaixo
