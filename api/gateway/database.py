@@ -4,12 +4,11 @@ from typing import List, Tuple
 import psycopg2
 from dotenv import load_dotenv
 from loguru import logger
-from psycopg2 import OperationalError
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from psycopg2.extensions import cursor
 
 
-class DatabaseAPI:
+class DatabaseGateway:
     def __init__(self) -> None:
         self.conn, self.database = self.__db_startup()
 
@@ -24,7 +23,7 @@ class DatabaseAPI:
                 "db_usr": str(os.getenv("DB_USR")),
                 "db_pwd": str(os.getenv("DB_PWD")),
                 "db_port": str(os.getenv("DB_PORT")) if env_mode == "dev" else "5433",
-                "db_host": str(os.getenv("DB_HOST")) if env_mode == "dev" else "172.20.0.1",
+                "db_host": str(os.getenv("DB_HOST")) if env_mode == "dev" else "host.docker.internal",
             }
             return env_db_data.get(meta_key, None)
         else:
@@ -40,7 +39,8 @@ class DatabaseAPI:
                 port=self.__load_db_env(meta_key="db_port"),
             )
             db_cur = db_cx.cursor()
-        except OperationalError:
+        except Exception as e:
+            logger.warning(e)
             db_cx, db_cur = self.__initialize_db()
 
         return db_cx, db_cur
@@ -71,7 +71,13 @@ class DatabaseAPI:
         init_stmt = (
             "CREATE DATABASE books_mobile;"
         )
-        init_cursor.execute(query=init_stmt)
+        try:
+            init_cursor.execute(query=init_stmt)
+        except Exception as op_err:
+            if "already exists" in str(op_err):
+                pass
+            else:
+                exit(1)
 
         init_cx = psycopg2.connect(
             database="books_mobile",
@@ -81,10 +87,10 @@ class DatabaseAPI:
             port=self.__load_db_env(meta_key="db_port")
         )
         init_cursor = init_cx.cursor()
+        init_cx.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         for cmd in init_cmds:
             logger.debug(cmd)
             init_cursor.execute(query=cmd)
-            init_cx.commit()
 
         return init_cx, init_cursor
 
