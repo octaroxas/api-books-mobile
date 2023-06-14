@@ -11,7 +11,7 @@ class AuthController:
     __SECRET_KEY = "a5dc873c70bd91166280c912ee8c2c4a90b79160e643f50f026198f72d3fb3a3"
     __ALGORITHM = "HS256"
     __AUTHCTX = CryptContext(schemes=["bcrypt"], deprecated="auto")
-    __AUTHSCH = OAuth2PasswordBearer(tokenUrl="/auth-user")
+    __AUTHSCH = OAuth2PasswordBearer(tokenUrl="/users/auth", scheme_name="JWT")
     __USRCTRL = UserController()
 
     def get_auth_scheme(self) -> OAuth2PasswordBearer:
@@ -43,7 +43,7 @@ class AuthController:
         user_data = self.get_user(username)
         if not user_data:
             return False
-        if not self.verify_password(password, user_data.hashed_password):
+        if not self.verify_password(password, user_data.password):
             return False
         return user_data
 
