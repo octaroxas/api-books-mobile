@@ -1,13 +1,17 @@
 from typing import Annotated
 
-from fastapi import FastAPI, Depends, HTTPException, status
+from fastapi import FastAPI, Depends, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordRequestForm
 from loguru import logger
 
 from api.gateway.database import DatabaseGateway
 from api.controller.auth import AuthController
 from api.controller.user import UserController
-from api.model.user import Token, DBUser, CreatedUser, RemovedUser
+from api.controller.books import BooksController
+
+from api.model.user import *
+from api.model.books import *
+
 
 methods_meta = [
     {
@@ -50,6 +54,16 @@ def test_database_connection() -> bool:
         return False
 
 
+@app.get(path="/debug/userdata", tags=["Debug"], response_model=DBUser)
+async def test_database_connection(
+        user: Annotated[AuthController().get_current_user, Depends()]) -> dict:
+    try:
+        return user.dict()
+    except Exception as e:
+        logger.error(f"Error validating User Token. Error/Exception: {e}.")
+        return {}
+
+
 @app.post(path="/users/auth", response_model=Token, tags=["Users"])
 async def user_login(user_credentials: Annotated[OAuth2PasswordRequestForm, Depends()]) -> dict:
     user = AuthController().authenticate_user(
@@ -62,7 +76,7 @@ async def user_login(user_credentials: Annotated[OAuth2PasswordRequestForm, Depe
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    access_token = AuthController().create_access_token(data={"sub": user.name})
+    access_token = AuthController().create_access_token(data={"sub": user.nickname})
     return {"access_token": access_token, "token_type": "bearer", "expiration_time": None}
 
 
@@ -76,8 +90,22 @@ async def create_user(user_data: DBUser) -> dict:
 
 
 @app.delete(path="/users/delete/{user_id}", tags=["Users"], response_model=RemovedUser)
-async def remove_user(user_credentials: Annotated[OAuth2PasswordRequestForm, Depends()], user_id: int) -> dict:
-    logger.debug(user_credentials.username)
-
+async def remove_user(user: Annotated[AuthController().get_current_user, Depends()], user_id: int) -> dict:
     delete_status = UserController().delete_user(user_id=user_id)
+    return delete_status
+
+
+@app.post(path="/books/add", tags=["Books"], response_model=NewUserBook)
+async def add_book(user: Annotated[AuthController().get_current_user, Depends()], book_data: NewUserBook) -> dict:
+    book_added = BooksController().insert_book(book_data=book_data)
+
+    if book_added:
+        return {"user": user.nickname, "status": "added"}
+    else:
+        return {"user": user.nickname, "status": "failed"}
+
+
+@app.delete(path="/books/remove/{book_id}", tags=["Books"], response_model=RemovedBook)
+async def remove_book(user: Annotated[AuthController().get_current_user, Depends()], book_data: UserBook) -> dict:
+    delete_status = BooksController().delete_book(book_data=book_data)
     return delete_status
