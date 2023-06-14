@@ -4,15 +4,15 @@ from jose import jwt, JWTError
 from passlib.context import CryptContext
 
 from api.model.user import *
-from api.controller.user import BooksUserController
+from api.controller.user import UserController
 
 
-class BooksAuthController:
+class AuthController:
     __SECRET_KEY = "a5dc873c70bd91166280c912ee8c2c4a90b79160e643f50f026198f72d3fb3a3"
     __ALGORITHM = "HS256"
     __AUTHCTX = CryptContext(schemes=["bcrypt"], deprecated="auto")
     __AUTHSCH = OAuth2PasswordBearer(tokenUrl="/auth-user")
-    __USRCTRL = BooksUserController()
+    __USRCTRL = UserController()
 
     def get_auth_scheme(self) -> OAuth2PasswordBearer:
         return self.__AUTHSCH

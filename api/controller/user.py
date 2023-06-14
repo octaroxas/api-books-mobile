@@ -1,12 +1,12 @@
 from datetime import datetime
 
-from api.gateway.database import DatabaseAPI
+from api.gateway.database import DatabaseGateway
 from api.model.user import DBUser
 
 
-class BooksUserController:
+class UserController:
     def __init__(self) -> None:
-        self.db = DatabaseAPI()
+        self.db = DatabaseGateway()
 
     def get_users(self) -> dict:
         user_table_data = self.db.get_data(table_name="users")
