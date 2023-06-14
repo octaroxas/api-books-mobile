@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS books (
     author TEXT NOT NULL,
     pages INT NOT NULL,
     isbn TEXT DEFAULT NULL,
-    created_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     favorited BOOL DEFAULT FALSE,
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users
