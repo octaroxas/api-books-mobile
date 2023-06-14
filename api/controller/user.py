@@ -14,7 +14,7 @@ class UserController:
         for user_data in user_table_data:
             username = user_data[-1]
             user_db_dict[username] = DBUser(
-                name=user_data[1], email=user_data[2], hashed_password=user_data[3], nickname=user_data[4]
+                name=user_data[1], email=user_data[2], password=user_data[3], nickname=user_data[4]
             ).dict()
 
         return user_db_dict

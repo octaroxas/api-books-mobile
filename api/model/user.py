@@ -19,7 +19,7 @@ class TokenData(BaseModel):
 
 
 class DBUser(User):
-    hashed_password: str
+    password: str
     nickname: str
 
 
